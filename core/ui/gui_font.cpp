@@ -22,6 +22,9 @@
 #include "oslib/resources.h"
 #include "IconsFontAwesome6.h"
 #include "imgui/misc/freetype/imgui_freetype.h"
+#ifdef __SWITCH__
+#include "nswitch.h"
+#endif
 
 ImFont *boldFont;
 
@@ -399,6 +402,12 @@ void gui_loadFonts()
 		registerFont({ &fonts, &boldFonts }, entry);
 	}
 	
+#elif defined(__SWITCH__)
+	PlFontData font;
+	if (R_SUCCEEDED(plGetSharedFontByType(&font, PlSharedFontType_ChineseSimplified))) {
+		io.Fonts->AddFontFromMemoryTTF(font.address, font.size, fontSize, &fontConfig);
+		io.Fonts->AddFontFromMemoryTTF(font.address, font.size, fontSize, &boldFontConfig);
+	}
 #elif defined(TARGET_OS_MAC)
 	emojiConfig.GlyphOffset = { 0.0f, fontSize * (0.2f) };
 	emojiBoldConfig.GlyphOffset = emojiConfig.GlyphOffset;

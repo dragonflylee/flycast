@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
 {
 	socketInitializeDefault();
 	nxlinkStdio();
+	plInitialize(PlServiceType_User);
 	//appletSetFocusHandlingMode(AppletFocusHandlingMode_NoSuspend);
 
 	LogManager::Init();
@@ -69,6 +70,7 @@ int main(int argc, char *argv[])
 
 	flycast_term();
 
+	plExit();
 	socketExit();
 
 	return 0;
